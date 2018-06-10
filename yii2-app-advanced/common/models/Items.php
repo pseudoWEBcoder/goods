@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use yii\helpers\ArrayHelper;
+
 /**
  * This is the model class for table "items".
  *
@@ -19,6 +21,14 @@ namespace common\models;
  * @property string $modifiers
  * @property int $ndsNo
  * @property int $receipt_id
+ * @property string $reason причина  использования
+ * @property string $image путь  к картинке
+ * @property string $description понятное описание
+ * @property int $paymentType
+ * @property int $nds
+ * @property int $ndsCalculated10
+ * @property int $ndsCalculated18
+ * @property int $goods_id идендификатор товара
  *
  * @property Receipt $receipt
  */
@@ -34,7 +44,7 @@ class Items extends \yii\db\ActiveRecord
         return 'items';
     }
 
-    public static function rus2translit($string,  $dir =  'ru-en')
+    public static function rus2translit($string, $dir = 'ru-en')
     {
         $converter = array(
             'а' => 'a', 'б' => 'b', 'в' => 'v',
@@ -61,8 +71,9 @@ class Items extends \yii\db\ActiveRecord
             'Ь' => '\'', 'Ы' => 'Y', 'Ъ' => '\'',
             'Э' => 'E', 'Ю' => 'Yu', 'Я' => 'Ya',
         );
-        return strtr($string,$dir ==  'ru-en'? $converter: array_flip($converter));
+        return strtr($string, $dir == 'ru-en' ? $converter : array_flip($converter));
     }
+
     public function behaviors()
     {
         return [
@@ -128,7 +139,21 @@ class Items extends \yii\db\ActiveRecord
      */
     public function getReceipt()
     {
-        return $this->hasOne(Receipt::className(), ['receipt_id' => 'receipt_id']);
+        return $this->hasOne(Receipt::class, ['receipt_id' => 'receipt_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGoods()
+    {
+        return $this->hasOne(Goods::class, ['goods_id' => 'goods_id']);
+    }
+
+    public function getAllGoods()
+    {
+        return ArrayHelper::map(Goods::find()->all(), 'goods_id', 'name');
+
     }
 
     /**
@@ -159,7 +184,7 @@ class Items extends \yii\db\ActiveRecord
 
     public function getImagesAsArray()
     {
-        return mb_strlen($this->image)>0?explode(';', $this->image):[];
+        return mb_strlen($this->image) > 0 ? explode(';', $this->image) : [];
 
     }
 

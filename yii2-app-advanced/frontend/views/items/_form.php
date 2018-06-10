@@ -1,8 +1,11 @@
 <?php
 
+use common\models\GoodsProperties;
+use kartik\select2\Select2;
+use kartik\widgets\FileInput;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\widgets\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Items */
@@ -11,7 +14,7 @@ use kartik\widgets\FileInput;
 
 <div class="items-form">
 
-    <?php $form = ActiveForm::begin([   'options'=>['enctype'=>'multipart/form-data'] ]); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'sum')->textInput() ?>
 
@@ -36,34 +39,78 @@ use kartik\widgets\FileInput;
     <?= $form->field($model, 'modifiers')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'ndsNo')->textInput() ?>
+    <?= $form->field($model, 'ndsNo')->textInput() ?>
 
     <?= $form->field($model, 'receipt_id')->textInput() ?>
-    <?= $form->field($model, 'reason')->textarea() ?><?php
-    $images =  $model->getImagesAsArray();
-    $am =  Yii::$app->getAssetManager();$Images =[];
-    foreach ($images as $index => $item) {
-        $tmp  =  $am->publish($item);
-        $tmp[] =  ['caption'=>pathinfo($item)['basename'], 'size' => filesize  ($item) ];
+    <?= $form->field($model, 'reason')->textarea() ?>
+    <?php if ($model->goods): ?>
+        <?php
+        $all = ArrayHelper::map(GoodsProperties::find()->asArray()->all(), 'name', 'title');
+        $values = $model->goods->propertiesValues;
+        $addon = [
+            'prepend' => [
+                'content' => kartik\helpers\Html::tag('code', 'Добавить  свойство')
+            ],
+            'append' => [
+                'content' => Html::button(kartik\helpers\Html::icon('plus'), [
+                    'class' => 'btn btn-success',
+                    'title' => 'Добавить  свойство',
+                    'data-toggle' => 'tooltip'
+                ]),
+                'asButton' => true
+            ]
+        ];
+        echo Select2::widget([
+            'name' => 'GoodsProperties',
+            'addon' => $addon,
+            'data' => $all,
+            'language' => 'ru',
+            'options' => ['placeholder' => 'выбрать свойство'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]); ?>
+    <?php else: ?>
 
-        $Images[]  =  $tmp;
+    <?php endif; ?>
+    <? echo $form->field($model, 'goods')->widget(Select2::classname(), [
+        'data' => $model->getAllGoods(),
+        'language' => 'ru',
+        'options' => ['placeholder' => 'прикрепить к товару из  справочника'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
+
+
+
+    <?php
+    $images = $model->getImagesAsArray();
+    $am = Yii::$app->getAssetManager();
+    $Images = [];
+    foreach ($images as $index => $item) {
+        $tmp = $am->publish($item);
+        $tmp[] = ['caption' => pathinfo($item)['basename'], 'size' => filesize($item)];
+
+        $Images[] = $tmp;
     }
 
     echo '<label class="control-label">добавить картинки</label>';
     echo FileInput::widget([
-    'model' => $model,
-    'attribute' => 'image',
-        'options'=>[
-            'multiple'=>true
+        'model' => $model,
+        'attribute' => 'image',
+        'options' => [
+            'multiple' => true
         ],
         'pluginOptions' => [
-            'initialPreview'=>\yii\helpers\ArrayHelper::getColumn($Images,  1),
-            'initialPreviewAsData'=>true,
-            'initialCaption'=>"The Moon and the Earth",
-            'initialPreviewConfig' => \yii\helpers\ArrayHelper::getColumn($Images,  2),
-            'overwriteInitial'=>false,
-            'maxFileSize'=>2800
+            'initialPreview' => ArrayHelper::getColumn($Images, 1),
+            'initialPreviewAsData' => true,
+            'initialCaption' => "The Moon and the Earth",
+            'initialPreviewConfig' => ArrayHelper::getColumn($Images, 2),
+            'overwriteInitial' => false,
+            'maxFileSize' => 2800
         ]
-    ]);?>
+    ]); ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

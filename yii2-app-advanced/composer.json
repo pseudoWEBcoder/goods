@@ -20,8 +20,9 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "kartik-v/yii2-dynagrid": "^1.4",
         "mdmsoft/yii2-admin": "~2.0",
-        "kartik-v/yii2-icons": "@dev",
-        "kartik-v/yii2-widgets": "*",
+      "kartik-v/yii2-icons": ">=1.0",
+      "kartik-v/yii2-widgets": ">=1.0",
+      "kartik-v/yii2-helpers": "dev-master",
         "mongosoft/yii2-upload-behavior": "*"
     },
     "require-dev": {

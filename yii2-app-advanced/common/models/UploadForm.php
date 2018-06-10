@@ -71,7 +71,22 @@ class UploadForm extends Model
             if ($receipt_saved)
                 $this->countreceiptsok++;
             foreach ($data['items'] as $index => $item) {
+                {
+                    $good = Goods::find()->where(['name' => $item['name']])->one();
+                    $good_id = $good->goods_id;
+                }
+                if (!$good) {
+                    $similar = Items::find()->where(['and', ['name' => $item['name']], ['is not', 'goods_id', null]])->one();
+                    $good_id = $similar->goods_id;
+                }
+                if (!$good_id) {
+                    $saved = ($good = new Goods(['name' => $item['name']]))->save();
+                    $good->refresh();
+                    $good_id = $good->goods_id;
+                }
+
                 $item = new Items($item);
+                $item->goods_id = $good_id;
                 $item->receipt_id = $receipt->receipt_id;
                 $saved = $item->save(false);
                 if ($saved)
@@ -87,7 +102,8 @@ class UploadForm extends Model
     {
         $r = new \common\models\Receipt();
         $attr = $r->getAttributes();
-        $i = new \common\models\Items;$k =0;
+        $i = new \common\models\Items;
+        $k = 0;
         $iAttr = $i->getAttributes();
         foreach ($this->json as $idocument => $receiptitem) {
             $data = $receiptitem['document']['receipt'];
@@ -97,7 +113,8 @@ class UploadForm extends Model
 
             }
             foreach ($data['items'] as $index => $item) {
-                foreach ($item as $i => $v) {$k++;
+                foreach ($item as $i => $v) {
+                    $k++;
                     if (!array_key_exists($i, $iAttr)) {
                         if (is_array($v))
                             $type = 'json';

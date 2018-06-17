@@ -23,7 +23,8 @@
       "kartik-v/yii2-icons": ">=1.0",
       "kartik-v/yii2-widgets": ">=1.0",
       "kartik-v/yii2-helpers": "dev-master",
-        "mongosoft/yii2-upload-behavior": "*"
+      "mongosoft/yii2-upload-behavior": "*",
+      "tmukherjee13/yii2-reverse-migration": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

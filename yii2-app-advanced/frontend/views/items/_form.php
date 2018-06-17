@@ -53,7 +53,7 @@ use yii\widgets\ActiveForm;
             ],
             'append' => [
                 'content' => Html::button(kartik\helpers\Html::icon('plus'), [
-                    'class' => 'btn btn-success',
+                    'class' => 'btn btn-success add_property',
                     'title' => 'Добавить  свойство',
                     'data-toggle' => 'tooltip'
                 ]),
@@ -94,7 +94,7 @@ use yii\widgets\ActiveForm;
 
         $Images[] = $tmp;
     }
-
+    echo $form->field($model, 'date_of_manufacture');
     echo '<label class="control-label">добавить картинки</label>';
     echo FileInput::widget([
         'model' => $model,

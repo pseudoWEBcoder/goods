@@ -28,6 +28,7 @@ use yii\helpers\ArrayHelper;
  * @property int $nds
  * @property int $ndsCalculated10
  * @property int $ndsCalculated18
+ * @property string $date_of_manufacture дата изготовления
  * @property int $goods_id идендификатор товара
  *
  * @property Receipt $receipt
@@ -104,6 +105,7 @@ class Items extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 255],
             [['receipt_id'], 'exist', 'skipOnError' => true, 'targetClass' => Receipt::className(), 'targetAttribute' => ['receipt_id' => 'receipt_id']],
             ['image', 'image', 'extensions' => 'jpg, jpeg, gif, png', 'on' => ['insert', 'update']],
+            [['date_of_manufacture'], 'safe']
 
         ];
     }
@@ -118,11 +120,9 @@ class Items extends \yii\db\ActiveRecord
             'sum' => 'Sum',
             'quantity' => 'количество',
             'price' => 'Price',
-            'formatedPrice' => 'цена',
-            'formatedSum' => 'сумма',
             'name' => 'название',
             'ndsRate' => 'НДС',
-            'ndsSum' => 'сумма  НДС',
+            'ndsSum' => 'сумма НДС',
             'nds18' => 'НДС 18%',
             'nds10' => 'НДС 10%',
             'calculationSubjectSign' => 'Calculation Subject Sign',
@@ -130,7 +130,15 @@ class Items extends \yii\db\ActiveRecord
             'modifiers' => 'Modifiers',
             'ndsNo' => 'без ндс',
             'receipt_id' => 'Receipt ID',
-            'attachments' => 'файлы'
+            'reason' => 'причина  использования',
+            'image' => 'путь  к картинке ',
+            'description' => 'понятное описание ',
+            'paymentType' => 'Payment Type',
+            'nds' => 'Nds',
+            'ndsCalculated10' => 'Nds Calculated10',
+            'ndsCalculated18' => 'Nds Calculated18',
+            'date_of_manufacture' => 'дата  изготовления',
+            'goods_id' => 'идендификатор товара',
         ];
     }
 

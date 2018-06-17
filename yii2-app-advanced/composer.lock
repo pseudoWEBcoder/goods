@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-      "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+      "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-  "content-hash": "7cb341205d3c93a4a6c5030557b43883",
+  "content-hash": "7c2c7ae872997fd477c2a23794d05645",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -119,7 +119,7 @@
             "version": "v1.3.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bestiejs/punycode.js.git",
+              "url": "git@github.com:bestiejs/punycode.js.git",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "dist": {
@@ -2172,6 +2172,47 @@
             "time": "2017-09-30T22:39:41+00:00"
         },
         {
+          "name": "tmukherjee13/yii2-reverse-migration",
+          "version": "v2.3.1",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/tmukherjee13/yii2-reverse-migration.git",
+            "reference": "875d6959e89dfd17cafc76a7c4650a14b46b6729"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tmukherjee13/yii2-reverse-migration/zipball/875d6959e89dfd17cafc76a7c4650a14b46b6729",
+            "reference": "875d6959e89dfd17cafc76a7c4650a14b46b6729",
+            "shasum": ""
+          },
+          "require": {
+            "yiisoft/yii2": ">2.0.6"
+          },
+          "type": "yii2-extension",
+          "autoload": {
+            "psr-4": {
+              "tmukherjee13\\migration\\": ""
+            }
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "BSD-3-Clause"
+          ],
+          "authors": [
+            {
+              "name": "Tarun Mukherjee",
+              "email": "tmukherjee13@gmail.com"
+            }
+          ],
+          "description": "Generate working migration classes from existing Database",
+          "keywords": [
+            "database",
+            "migration",
+            "yii2"
+          ],
+          "time": "2016-10-05T14:26:48+00:00"
+        },
+      {
             "name": "yiisoft/yii2",
             "version": "2.0.15.1",
             "source": {

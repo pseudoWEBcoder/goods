@@ -106,29 +106,29 @@ class ItemsController extends Controller
         $model = $this->findModel($id);
         $model->setScenario('insert');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            // get the uploaded file instance. for multiple file uploads
-            // the following data will return an array
-            $image = UploadedFile::getInstance($model, 'image');
-
-
-            $ffinfo  =  pathinfo( $image->name);
-            $ext =$ffinfo['extension'];
-
-            // generate a unique file name
-            $name = $model::rus2translit($image->name).date('__(d_m_Y_H-i-s)').".{$ext}";
-
-            // the path to save file, you can set an uploadPath
-            // in Yii::$app->params (as used in example below)
-            $path = Yii::getAlias('@common/'.Yii::$app->params['uploadImagesPath'] . '/'.$name);
-
-            if($image->saveAs($path)){
-                $model->addImage($path);
-                $model->save();
-                return $this->redirect(['view', 'id'=>$model->item_id]);
-            } else {
-                // error in saving model
-            }
+//
+//            // get the uploaded file instance. for multiple file uploads
+//            // the following data will return an array
+//            $image = UploadedFile::getInstance($model, 'image');
+//
+//
+//            $ffinfo  =  pathinfo( $image->name);
+//            $ext =$ffinfo['extension'];
+//
+//            // generate a unique file name
+//            $name = $model::rus2translit($image->name).date('__(d_m_Y_H-i-s)').".{$ext}";
+//
+//            // the path to save file, you can set an uploadPath
+//            // in Yii::$app->params (as used in example below)
+//            $path = Yii::getAlias('@common/'.Yii::$app->params['uploadImagesPath'] . '/'.$name);
+//
+//            if($image->saveAs($path)){
+//                $model->addImage($path);
+//                $model->save();
+//                return $this->redirect(['view', 'id'=>$model->item_id]);
+//            } else {
+//                // error in saving model
+//            }
             return $this->redirect(['view', 'id' => $model->item_id]);
         }
 

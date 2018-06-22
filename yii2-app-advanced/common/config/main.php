@@ -61,6 +61,11 @@ return [
             'class' => 'mdm\admin\Module',
             'layout'=>'left-menu'
 
-        ]
+        ],
+
+            'uploadBehavior' => [
+                'class' => 'cyneek\yii2\uploadBehavior\Module',
+            ]
+
     ]
 ];

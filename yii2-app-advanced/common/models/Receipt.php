@@ -152,4 +152,12 @@ class Receipt extends \yii\db\ActiveRecord
         return number_format($this->totalSum / 100, 2, '.', ' ');
     }
 
+    public function getDateTimeAsDateTime($outf = 'Y-m-d H:i:s', $inf = 'Y-m-d\TH:i:s')
+    {
+        if ($this->dateTime)
+            $d = \DateTimeImmutable::createFromFormat($inf, $this->dateTime);
+        return $d ? $d->format($outf) : null;
+
+    }
+
 }

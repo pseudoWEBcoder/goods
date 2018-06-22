@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use cyneek\yii2\uploadBehavior\UploadBehavior;
+use cyneek\yii2\uploadBehavior\UploadImageBehavior;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -78,19 +80,21 @@ class Items extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            [
-                'class' => \mongosoft\file\UploadImageBehavior::class,
-                'attribute' => 'image',
-                'scenarios' => ['insert', 'update'],
-                'placeholder' => '@app/modules/user/assets/images/userpic.jpg',
-                'path' => '@common/upload/images/{id}',
-                'url' => '@web/upload/user/{id}',
-                'thumbs' => [
-                    'thumb' => ['width' => 400, 'quality' => 90],
-                    'preview' => ['width' => 200, 'height' => 200],
-                    'news_thumb' => ['width' => 200, 'height' => 200, 'bg_color' => '000'],
-                ],
-            ],
+//            [
+//                'class' => UploadBehavior::className(),
+//                'attribute' => 'image',
+//                'scenarios' => ['default'],
+//                'fileActionOnSave' => 'delete'
+//            ],
+                [
+              'class' => UploadImageBehavior::className(),
+              'attribute' => 'image',
+              'scenarios' => ['insert', 'update'],
+              'thumbPath' => '@webroot/upload/items/{id}/images/thumb',
+              'path' => '@webroot/upload/items/{id}/images/thumb',
+                    'fileActionOnSave' => 'delete',
+              'thumbs' => [ 'mini' => [ ['action' => 'crop', 'width' => 200, 'height' => 200, 'quality' => 90], /*...*/ ] ]
+          ],
         ];
     }
 

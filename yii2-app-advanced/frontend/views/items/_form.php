@@ -85,7 +85,7 @@ use yii\widgets\ActiveForm;
 
 
     <?php
-    $images = $model->getImagesAsArray();
+    $images = $model->linkedFiles('image');
     $am = Yii::$app->getAssetManager();
     $Images = [];
     foreach ($images as $index => $item) {
@@ -94,7 +94,12 @@ use yii\widgets\ActiveForm;
 
         $Images[] = $tmp;
     }
-    echo $form->field($model, 'date_of_manufacture');
+    echo $form->field($model, 'date_of_manufacture')->widget(\kartik\widgets\DateTimePicker::classname(), [
+        'options' => ['placeholder' => $model->getAttributeLabel('date_of_manufacture')],
+        'pluginOptions' => [
+            'autoclose' => true
+        ]
+    ]);;
     echo '<label class="control-label">добавить картинки</label>';
     echo FileInput::widget([
         'model' => $model,

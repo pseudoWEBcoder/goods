@@ -88,6 +88,8 @@ class UploadForm extends Model
                 $item = new Items($item);
                 $item->goods_id = $good_id;
                 $item->receipt_id = $receipt->receipt_id;
+                $item->date_of_manufacture = $receipt->getDateTimeAsDateTime();
+                $item->date_ыуе_by_bot = 1;
                 $saved = $item->save(false);
                 if ($saved)
                     $this->countitemsok++;

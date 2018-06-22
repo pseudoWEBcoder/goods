@@ -76,7 +76,11 @@ class SiteController extends Controller
     {
         $searchModel = new ItemsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->setSort( [
+            'defaultOrder' => [
+                'date_of_manufacture' => SORT_DESC,
 
+            ]]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

@@ -3,14 +3,16 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use yii\helpers\Html;
+use common\widgets\Alert;
+use frontend\assets\AppAsset;
+use kartik\icons\Icon;
+use mdm\admin\components\MenuHelper;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
-use common\widgets\Alert;
-use mdm\admin\components\MenuHelper;
-use kartik\icons\Icon;
+
+//use mdm\admin\components\MenuHelper;
 Icon::map($this);
 
 AppAsset::register($this);

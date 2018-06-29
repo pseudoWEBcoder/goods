@@ -16,7 +16,42 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+    <?php
+    echo newerton\fancybox\FancyBox::widget([
+        'target' => 'a[rel=fancybox]',
+        'helpers' => true,
+        'mouse' => true,
+        'config' => [
+            'maxWidth' => '90%',
+            'maxHeight' => '90%',
+            'playSpeed' => 7000,
+            'padding' => 0,
+            'fitToView' => false,
+            'width' => '70%',
+            'height' => '70%',
+            'autoSize' => false,
+            'closeClick' => false,
+            'openEffect' => 'elastic',
+            'closeEffect' => 'elastic',
+            'prevEffect' => 'elastic',
+            'nextEffect' => 'elastic',
+            'closeBtn' => false,
+            'openOpacity' => true,
+            'helpers' => [
+                'title' => ['type' => 'float'],
+                'buttons' => [],
+                'thumbs' => ['width' => 68, 'height' => 50],
+                'overlay' => [
+                    'css' => [
+                        'background' => 'rgba(0, 0, 0, 0.8)'
+                    ]
+                ]
+            ],
+        ]
+    ]);
 
+    //echo Html::a(Html::img('/folder/thumb.jpg'), '/folder/imagem.jpg', ['rel' => 'fancybox']);
+    ?>
 
     <?= GridView::widget([
 
@@ -26,6 +61,19 @@ $this->params['breadcrumbs'][] = $this->title;
             return is_null($model->reason) ? [] : ['class' => 'success'];
         },
         'columns' => [
+            ['format' => 'raw',
+                'value' => function ($model, $key, $index, $widget) {
+                    $file = $model->linkedFiles('image');
+                    $reg = '/web\/index\.phpuploads\//';
+                    $repl = '/web/uploads/';
+                    if ($file) {
+                        $child = $file[0]->getChild('thumb');
+                        $childr = $file[0]->getChildren();
+                        $fullsize = preg_replace($reg, $repl, $file[0]->getFilePath());
+                        $mini = preg_replace($reg, $repl, $childr[1]->getFilePath());
+                        return Html::a(Html::img($mini), $fullsize, ['rel' => 'fancybox', 'title' => $model->name]);
+                    }
+                }],
             ['class' => 'yii\grid\SerialColumn'],
 
 

@@ -94,7 +94,7 @@ use yii\widgets\ActiveForm;
         $path = (implode('/', [$item->completePath, $item->fileName . '.' . $item->extension]));
         $path = Yii::getAlias($path);
         $tmp = $am->publish($path);
-        $tmp[] = ['caption' => pathinfo($path)['basename'], 'size' => filesize($path)];
+        $tmp[] = ['caption' => pathinfo($path)['basename'], 'size' => filesize($path), 'key' => $index];
 
         $Images[] = $tmp;
     }
@@ -117,7 +117,8 @@ use yii\widgets\ActiveForm;
             'initialCaption' => "The Moon and the Earth",
             'initialPreviewConfig' => ArrayHelper::getColumn($Images, 2),
             'overwriteInitial' => false,
-            "uploadUrl" => \yii\helpers\Url::to(['/items/update', 'id' => $model->item_id]),
+            "uploadUrl" => \yii\helpers\Url::to(['/items/update-images', 'id' => $model->item_id]),
+            "deleteUrl" => \yii\helpers\Url::to(['/items/update-images', 'id' => $model->item_id]),
             'maxFileSize' => 2800
         ]
     ]); ?>

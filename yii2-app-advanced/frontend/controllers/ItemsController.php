@@ -2,13 +2,13 @@
 
 namespace frontend\controllers;
 
-use Yii;
 use common\models\Items;
 use common\models\ItemsSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
+use yii\web\Response;
 
 /**
  * ItemsController implements the CRUD actions for Items model.
@@ -57,6 +57,23 @@ class ItemsController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+
+    /**
+     * Finds the Items model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Items the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Items::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
     /**
      * Displays a single Items model.
      * @param integer $id
@@ -67,7 +84,8 @@ class ItemsController extends Controller
     {
         $model = $this->findModel($id);
         $model->reason = date("Y-m-d H:i:s");
-        if (/*$model->load(Yii::$app->request->post()) && */$model->save()) {
+        if (/*$model->load(Yii::$app->request->post()) && */
+        $model->save()) {
             return $this->goBack();
         }
 
@@ -137,6 +155,32 @@ class ItemsController extends Controller
         ]);
     }
 
+    public function actionUpdateImages($id)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = $this->findModel($id);
+        if (!$model) {
+            $response['error'] = " не  правильный  ИД  ";
+            return $response;
+        }
+
+        try {
+            $file = $model->linkedFiles('image');
+            $key = (int)Yii::$app->request->post('key', $no = md5('not  set'));
+            if (($key === $no) or !is_numeric($key) or (!isset($file[$key]))) {
+                $response['error'] = " не  правильный  key  ";
+                return $response;
+            }
+            $model->deleteFiles('image', $file[$key]);
+        } catch (Exception $e) {
+            $response['error'] = $e->getMessage();
+        }
+
+        return 'невозможно удалить';
+
+
+    }
+
     /**
      * Deletes an existing Items model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -149,21 +193,5 @@ class ItemsController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Items model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Items the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Items::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
+use kartik\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ItemsSearch */
@@ -24,6 +25,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            [
+                'attribute' => 'item_id',
+                'vAlign' => 'middle',
+                'width' => '180px',
+                'format' => 'raw',
+                'value' => function ($model, $key, $index, $widget) {
+                    $file = $model->linkedFiles('image');
+                    if ($file) {
+                        $child = $file->getChild('thumb');
+                    }
+                    return Html::a($model->item_id,
+                        '#',
+                        ['title' => 'View author detail', 'onclick' => 'alert("This will open the author page.\n\nDisabled for this demo!")']);
+                },
+                'filterType' => GridView::FILTER_SELECT2,
+                'filter' => ArrayHelper::map(\common\models\Items::find()->orderBy('name')->asArray()->all(), 'item_id', 'name'),
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+            ],
             ['class' => 'yii\grid\SerialColumn'],
 
             'item_id',

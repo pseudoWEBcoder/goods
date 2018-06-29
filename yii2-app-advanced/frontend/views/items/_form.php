@@ -88,9 +88,13 @@ use yii\widgets\ActiveForm;
     $images = $model->linkedFiles('image');
     $am = Yii::$app->getAssetManager();
     $Images = [];
+
     foreach ($images as $index => $item) {
-        $tmp = $am->publish($item);
-        $tmp[] = ['caption' => pathinfo($item)['basename'], 'size' => filesize($item)];
+        /** @var \cyneek\yii2\uploadBehavior\models\ImageFileModel $item */
+        $path = (implode('/', [$item->completePath, $item->fileName . '.' . $item->extension]));
+        $path = Yii::getAlias($path);
+        $tmp = $am->publish($path);
+        $tmp[] = ['caption' => pathinfo($path)['basename'], 'size' => filesize($path)];
 
         $Images[] = $tmp;
     }
@@ -113,6 +117,7 @@ use yii\widgets\ActiveForm;
             'initialCaption' => "The Moon and the Earth",
             'initialPreviewConfig' => ArrayHelper::getColumn($Images, 2),
             'overwriteInitial' => false,
+            "uploadUrl" => \yii\helpers\Url::to(['/items/update', 'id' => $model->item_id]),
             'maxFileSize' => 2800
         ]
     ]); ?>

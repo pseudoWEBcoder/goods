@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use cyneek\yii2\uploadBehavior\UploadBehavior;
 use cyneek\yii2\uploadBehavior\UploadImageBehavior;
 use yii\helpers\ArrayHelper;
 
@@ -86,15 +85,24 @@ class Items extends \yii\db\ActiveRecord
 //                'scenarios' => ['default'],
 //                'fileActionOnSave' => 'delete'
 //            ],
-                [
-              'class' => UploadImageBehavior::className(),
-              'attribute' => 'image',
-              'scenarios' => ['insert', 'update'],
-              'thumbPath' => '@webroot/upload/items/{id}/images/thumb',
-              'path' => '@webroot/upload/items/{id}/images/thumb',
-                    'fileActionOnSave' => 'delete',
-              'thumbs' => [ 'mini' => [ ['action' => 'crop', 'width' => 200, 'height' => 200, 'quality' => 90], /*...*/ ] ]
-          ],
+            [
+                'class' => UploadImageBehavior::className(),
+                'attribute' => 'image',
+                'scenarios' => ['insert', 'update'],
+                'thumbPath' => 'items/images/thumb',
+                'path' => 'items/images',
+                'fileActionOnSave' => 'insert',
+                'thumbs' => [
+                    'thumb' => [
+                        ['action' => 'thumbnail', 'width' => 200, 'height' => 200, 'quality' => 90]
+                    ],
+                    'mini' => [
+                        ['action' => 'thumbnail', 'width' => 50, 'height' => 50, 'quality' => 90]
+                    ],
+                ]
+//                'imageActions' => [['action' => 'thumbnail', 'width' => '400', 'height' => '400'], ['action' => 'thumbnail', 'width' => '400', 'height' => '400']]
+
+            ],
         ];
     }
 

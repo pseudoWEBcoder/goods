@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="files10.hostinger.ru">
+  <component name="PublishConfigData" serverName="files10.hostinger.ru" traceLevel="DETAILS">
     <serverData>
       <paths name="files10.hostinger.ru">
         <serverdata>
           <mappings>
-            <mapping deploy="/public_html/goods" local="$PROJECT_DIR$/yii2-app-advanced" web="/" />
+            <mapping deploy="/public_html/goods" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

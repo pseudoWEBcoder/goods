@@ -88,13 +88,26 @@ use yii\widgets\ActiveForm;
     $images = $model->linkedFiles('image');
     $am = Yii::$app->getAssetManager();
     $Images = [];
-
+    $reg = '/web\/index\.phpuploads\//';
+    $repl = '/web/uploads/';
     foreach ($images as $index => $item) {
         /** @var \cyneek\yii2\uploadBehavior\models\ImageFileModel $item */
+        $thumb = $item->getChildren('thumb');
+        $UrlThumb = preg_replace($reg, $repl, $thumb[0]->getFilePath());
+        $pathThumb = preg_replace($reg, $repl, $thumb[0]->getFilePath());
+        $path = (implode('/', [$thumb[0]->completePath, $thumb[0]->fileName . '.' . $thumb[0]->extension]));
+        $pathThumb = Yii::getAlias($path);
         $path = (implode('/', [$item->completePath, $item->fileName . '.' . $item->extension]));
-        $path = Yii::getAlias($path);
-        $tmp = $am->publish($path);
-        $tmp[] = ['caption' => pathinfo($path)['basename'], 'size' => filesize($path), 'key' => $index];
+        $pathFullsize = Yii::getAlias($path);
+        $UrlFullsize = preg_replace($reg, $repl, $item->getFilePath());
+        $tmp = $am->publish($pathThumb);
+        $tmp[] = [
+            'downloadUrl' => $UrlFullsize,
+            'caption' => ArrayHelper::getValue($thumb, '0.fileName'),
+            'size' => filesize($path), 'key' => $index, /*'type'=>'',*/
+            'filename' => ArrayHelper::getValue($thumb, '0.fileName'),
+            'filetype' => ArrayHelper::getValue($thumb, '0.mimeType')
+        ];
 
         $Images[] = $tmp;
     }
@@ -117,8 +130,8 @@ use yii\widgets\ActiveForm;
             'initialCaption' => "The Moon and the Earth",
             'initialPreviewConfig' => ArrayHelper::getColumn($Images, 2),
             'overwriteInitial' => false,
-            "uploadUrl" => \yii\helpers\Url::to(['/items/update-images', 'id' => $model->item_id]),
-            "deleteUrl" => \yii\helpers\Url::to(['/items/update-images', 'id' => $model->item_id]),
+            "uploadUrl" => \yii\helpers\Url::to(['/items/update-images', 'action' => 'upload', 'id' => $model->item_id]),
+            "deleteUrl" => \yii\helpers\Url::to(['/items/update-images', 'action' => 'delete', 'id' => $model->item_id]),
             'maxFileSize' => 2800
         ]
     ]); ?>

@@ -6,6 +6,7 @@ use common\models\Items;
 use common\models\ItemsSearch;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\helpers\StringHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -155,7 +156,7 @@ class ItemsController extends Controller
         ]);
     }
 
-    public function actionUpdateImages($id)
+    public function actionUpdateImages($action, $id)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $model = $this->findModel($id);
@@ -163,19 +164,40 @@ class ItemsController extends Controller
             $response['error'] = " не  правильный  ИД  ";
             return $response;
         }
-
-        try {
-            $file = $model->linkedFiles('image');
-            $key = (int)Yii::$app->request->post('key', $no = md5('not  set'));
-            if (($key === $no) or !is_numeric($key) or (!isset($file[$key]))) {
-                $response['error'] = " не  правильный  key  ";
-                return $response;
+        if ($action == 'delete') {
+            try {
+                $file = $model->linkedFiles('image');
+                $key = (int)Yii::$app->request->post('key', $no = md5('not  set'));
+                if (($key === $no) or !is_numeric($key) or (!isset($file[$key]))) {
+                    $response['error'] = " не  правильный  key  ";
+                    return $response;
+                }
+                $model->deleteFiles('image', $file[$key]);
+            } catch (Exception $e) {
+                $response['error'] = $e->getMessage();
             }
-            $model->deleteFiles('image', $file[$key]);
-        } catch (Exception $e) {
-            $response['error'] = $e->getMessage();
         }
+        if ($action == 'upload') {
+            try {
+                $model->scenario = 'insert';
+                $data = [StringHelper::basename(get_class($model)) => ['image']];
+                if ($model->load($data)) {
+                    if ($model->save()) {
+                        $response = "OK  сохранилось";
+                        return $response;
+                    } else {
+                        $response['error'] = " не  сохраняется ";
+                        return $response;
+                    }
+                } else {
+                    $response['error'] = implode('<br>', $model->getErrors());
+                    return $response;
+                }
+            } catch (Exception $e) {
+                $response['error'] = $e->getMessage();
+            }
 
+        }
         return 'невозможно удалить';
 
 

@@ -70,6 +70,7 @@ use yii\widgets\ActiveForm;
                 'allowClear' => true
             ],
         ]); ?>
+
     <?php else: ?>
 
     <?php endif; ?>
@@ -82,7 +83,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-
+    <div><?php echo Html::a('править товар', ['/goods/update', 'id' => $model->goods_id]) ?></div>
 
     <?php
     $images = $model->linkedFiles('image');

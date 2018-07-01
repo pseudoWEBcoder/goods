@@ -1,19 +1,20 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Items;
 use common\models\ItemsSearch;
-use Yii;
-use yii\base\InvalidParamException;
-use yii\db\Expression;
-use yii\web\BadRequestHttpException;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\LoginForm;
+use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use Yii;
+use yii\base\InvalidParamException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
+use yii\web\Controller;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -81,6 +82,26 @@ class SiteController extends Controller
                 'date_of_manufacture' => SORT_DESC,
 
             ]]);
+        if (Yii::$app->request->post('hasEditable')) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            // instantiate your book model for saving
+            $Id = Yii::$app->request->post('editableKey');
+            $model = Items::findOne($Id);
+            $posted = current($_POST['Items']);
+            $post = ['Items' => $posted];
+            if ($model->load($post)) {
+                $model->date_set_by_bot = 0;
+                if ($model->save()) {
+                    return ['output' => '', 'message' => ''];
+                } else {
+                    return ['output' => '', 'message' => implode($model->getErrors())];
+                }
+            } else {
+                return ['output' => '', 'message' => implode($model->getErrors())];
+            }
+
+            ['output' => '', 'message' => ''];
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

@@ -14,7 +14,11 @@ return [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\PhpManager'
         ],
 
-
+        'formatter' => ['defaultTimeZone' => 'europe/moscow',
+            'dateFormat' => 'dd.MM.yyyy',
+            'decimalSeparator' => ',',
+            'thousandSeparator' => ' ',
+            'currencyCode' => 'RUR',],
         'i18n' => [
             'translations' => [
                 '*' => [

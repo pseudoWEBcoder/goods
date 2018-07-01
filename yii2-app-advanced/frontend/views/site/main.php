@@ -1,7 +1,7 @@
 <?php
 
+use kartik\grid\GridView;
 use kartik\icons\Icon;
-use yii\grid\GridView;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
     <?= GridView::widget([
-
+//'bootstrap'=>true,
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'rowOptions' => function ($model, $key) {
@@ -74,7 +74,27 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a(Html::img($mini), $fullsize, ['rel' => 'fancybox', 'title' => $model->name]);
                     }
                 }],
-            ['class' => 'yii\grid\SerialColumn'],
+            ['attribute' => 'item_id', 'header' => '#', 'contentOptions' => ''],
+//            [
+//                'class'=>'kartik\grid\EditableColumn',
+//                'attribute'=>'date_of_manufacture',
+//               // 'pageSummary'=>true,
+//                'editableOptions'=> /**
+//                 * @param \common\models\Items $model
+//                 * @param string $key
+//                 * @param integer $index
+//                 * @return array
+//                 */
+//                    function ($model, $key, $index) {
+//
+//                        /** @var \common\models\Items $model */
+//                        return [
+//                        'header'=>$model->getAttributeLabel($key),
+//                        'size'=>'md',
+//
+//                    ];
+//                }
+//            ],
 
 
             'formatedSum',
@@ -82,6 +102,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'formatedPrice',
             'quantity',
+            [
+                'class' => 'kartik\grid\EditableColumn',
+                'attribute' => 'date_of_manufacture',
+                'editableOptions' => [
+                    'header' => 'Buy Amount',
+                    'inputType' => \kartik\editable\Editable::INPUT_DATETIME,
+                    'pluginOptions' => ['language' => 'ru']
+
+                ],
+                'hAlign' => 'right',
+                'vAlign' => 'middle',
+                'width' => '100px',
+                'format' => 'datetime',
+                'pageSummary' => true
+            ],
             //'ndsRate',
             //'ndsSum',
             //'nds18',

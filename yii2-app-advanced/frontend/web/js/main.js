@@ -9,5 +9,33 @@ jQuery(function () {
         fg.after(New);
         e.preventDefault();
     });
+    $(document).on('click', '.convertdate', function (e) {
+        attr = $(this).data('cell');
+        $that = $(this), oldhtml = $that.html();
+        format = $(this).data('format');
+        $(this).button('loading');
+        $.getJSON(Server.convertdate.url, {'from': $(attr).val(), 'format': format})
+            .fail(function (xhr, text, fulltext) {
+                alert([text, ':', fulltext]);
+                $that.button('reset');
+            })
+            .done(function (result) {
+                $that.button('reset');
+                if ('error' in result) {
+                    $that.html(result.html);
+                    setTimeout(function () {
+                        $that.html(oldhtml);
+                    }, 1000);
+                } else {
+                    $(attr).fadeOut();
+                    $(attr).val(result.result);
+                    $(attr).fadeIn('fast', function () {
+                    });
+                }
 
-});
+            });
+        e.preventDefault();
+    });
+
+})
+;

@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\controllers;
 
 use common\models\Items;
@@ -77,7 +78,7 @@ class SiteController extends Controller
     {
         $searchModel = new ItemsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->setSort( [
+        $dataProvider->setSort([
             'defaultOrder' => [
                 'date_of_manufacture' => SORT_DESC,
 
@@ -164,6 +165,31 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionCovertdate($from, $format)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if ($from && is_numeric($from)) {
+            try {
+                switch ($format) {
+                    case 'day2hours':
+                        $result['result'] = $from * 24;
+                        break;
+                    case 'year2hours':
+                        $result['result'] = $from * 24 * 360;
+                        break;
+
+                }
+            } catch (\Exception $e) {
+                $result = ['error' => $e->getMessage()];
+            }
+        } else {
+            $result = ['error' => 'не правильно введено значение'];
+        }
+        return $result;
+
+
     }
 
     /**

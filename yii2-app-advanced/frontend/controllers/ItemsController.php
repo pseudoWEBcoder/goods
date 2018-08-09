@@ -87,7 +87,7 @@ class ItemsController extends Controller
         $model->reason = date("Y-m-d H:i:s");
         if (/*$model->load(Yii::$app->request->post()) && */
         $model->save()) {
-            return $this->goBack();
+            return $this->goHome();
         }
 
         return $this->render('update', [

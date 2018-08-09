@@ -14,7 +14,7 @@ $this->registerJs('var Server = ' . json_encode(['convertdate' => ['url' => Url:
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'didabled' => true]) ?>
 
     <?= $form->field($model, 'recognizable_name')->textInput() ?>
 
@@ -42,7 +42,7 @@ $this->registerJs('var Server = ' . json_encode(['convertdate' => ['url' => Url:
                         'label' => 'Air',
                         'dropdown' => [
                             'items' => [
-                                ['label' => 'Another action', 'url' => '#'],
+                                ['label' => 'Another action', 'url' => '#',],
                                 ['label' => 'Something else', 'url' => '#'],
                                 '<li class="divider"></li>',
                                 ['label' => 'Separated link', 'url' => '#'],

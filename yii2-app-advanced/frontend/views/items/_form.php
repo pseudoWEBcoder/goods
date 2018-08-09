@@ -23,7 +23,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'price')->textInput() ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
+    <?php $id = 'collapse_' . mt_rand();
+    echo Html::beginTag('div', ['class' => 'custom-collapse']), html::a('[..]', '#' . $id, ['class' => "btn btn-primary", 'data-toggle' => "collapse", /*'role'=>"button",  'aria-expanded'=>"false", 'aria-controls'=>"#".$id*/]) . PHP_EOL . Html::beginTag('div', ['id' => $id, 'class' => 'collapse']); ?>
     <?= $form->field($model, 'ndsRate')->textInput() ?>
 
     <?= $form->field($model, 'ndsSum')->textInput() ?>
@@ -43,6 +44,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'receipt_id')->textInput() ?>
     <?= $form->field($model, 'reason')->textarea() ?>
+    <?php echo Html::endTag('div'), '<!--/div' . $id . '.collapse-->', Html::endTag('div'), '<!--/div.custom-collapse-->'; ?>
     <?php if ($model->goods): ?>
         <?php
         $all = ArrayHelper::map(GoodsProperties::find()->asArray()->all(), 'name', 'title');

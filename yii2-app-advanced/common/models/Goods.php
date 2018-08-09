@@ -67,7 +67,7 @@ class Goods extends \yii\db\ActiveRecord
             $result = ['error' => $e->getMessage()];
         }
         $labels = [
-            'y' => ['nom' => 'год', 'gen' => 'лет', 'plu' => 'лет'],
+            'y' => ['nom' => 'год', 'gen' => 'года', 'plu' => 'лет'],
             'm' => ['nom' => 'месяц', 'gen' => 'месяца', 'plu' => 'месяцев'],
             'd' => ['nom' => 'день', 'gen' => 'дня', 'plu' => 'дней'],
             'h' => ['nom' => 'час', 'gen' => 'часа', 'plu' => 'часов'],

@@ -2,6 +2,7 @@
 return [
     'language' => 'ru-RU',
     'aliases' => [
+        '@rootDir' => realpath('../../'),
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],

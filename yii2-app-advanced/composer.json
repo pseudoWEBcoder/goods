@@ -28,7 +28,8 @@
         "kartik-v/yii2-widget-datetimepicker": "*",
       "cyneek/yii2-upload-behavior": "^0.0.8",
         "newerton/yii2-fancybox": "dev-master",
-        "kartik-v/yii2-editable": "*"
+      "kartik-v/yii2-editable": "*",
+      "johnitvn/yii2-ajaxcrud": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

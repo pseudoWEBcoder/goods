@@ -117,6 +117,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'datetime',
                 'pageSummary' => true
             ],
+            'goods.name',
+//            [
+//                'class' => 'kartik\grid\EditableColumn',
+//                'attribute' => 'goods.name',
+//                'editableOptions' => [
+//                    'header' => 'Buy Amount',
+//                    'inputType' => \kartik\editable\Editable::INPUT_SELECT2,
+//                    'pluginOptions' => ['language' => 'ru']
+//
+//                ],
+//                'hAlign' => 'right',
+//                'vAlign' => 'middle',
+//                'width' => '100px',
+//             //   'format' => 'datetime',
+//                'pageSummary' => true
+//            ],
             //'ndsRate',
             //'ndsSum',
             //'nds18',

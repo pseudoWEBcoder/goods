@@ -26,10 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'item_id',
-        //    'sum',
+            //    'sum',
             'formatedSum',
             'quantity',
-        //    'price',
+            //    'price',
             'formatedPrice',
             'name',
             'ndsRate',
@@ -40,7 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'calculationTypeSign',
             'modifiers:ntext',
             'ndsNo',
-            'receipt_id',
+            [
+                'attribute' => 'receipt_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::a($model->receipt->user ? $model->receipt->user : $model->receipt->receipt_id, ['/receipt/view', 'id' => $model->receipt_id]);
+                }
+            ],
+
         ],
     ]) ?>
 

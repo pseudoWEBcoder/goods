@@ -158,4 +158,9 @@ class Goods extends \yii\db\ActiveRecord
     {
         return $this->hasMany(PropertiesValues::className(), ['goods_id' => 'goods_id']);
     }
+
+    public function getCategory()
+    {
+        return $this->hasOne(Categories::class, ['categotry_id' => 'id_category']);
+    }
 }

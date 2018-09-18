@@ -1,11 +1,11 @@
 <?php
 
 use common\models\GoodsProperties;
+use kartik\form\ActiveForm;
 use kartik\select2\Select2;
 use kartik\widgets\FileInput;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Items */

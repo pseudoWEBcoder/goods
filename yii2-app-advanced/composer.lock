@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-  "content-hash": "a6deff477d20b01da3c371edadb7988d",
+  "content-hash": "1c67cfde17c7a608d20a78b8e125b40f",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -74,6 +74,22 @@
             "GPLv3"
           ]
         },
+      {
+        "name": "bower-asset/highlightjs",
+        "version": "9.12.0",
+        "source": {
+          "type": "git",
+          "url": "git@github.com:components/highlightjs.git",
+          "reference": "3686afa1decd999857ac9e1ae27c24df2e64be3a"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/components/highlightjs/zipball/3686afa1decd999857ac9e1ae27c24df2e64be3a",
+          "reference": "3686afa1decd999857ac9e1ae27c24df2e64be3a",
+          "shasum": null
+        },
+        "type": "bower-asset"
+      },
       {
             "name": "bower-asset/inputmask",
             "version": "3.3.11",
@@ -274,6 +290,47 @@
             "time": "2017-07-16T21:13:23+00:00"
         },
         {
+          "name": "coderius/yii2-highlight-js",
+          "version": "1.0.0",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/coderius/yii2-highlight-js.git",
+            "reference": "7dcc83bc0e30d8780b62228d32967d5102d3d6af"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/coderius/yii2-highlight-js/zipball/7dcc83bc0e30d8780b62228d32967d5102d3d6af",
+            "reference": "7dcc83bc0e30d8780b62228d32967d5102d3d6af",
+            "shasum": ""
+          },
+          "require": {
+            "yiisoft/yii2": "~2.0.0"
+          },
+          "type": "yii2-extension",
+          "autoload": {
+            "psr-4": {
+              "coderius\\yii2_highlight_js\\": "src/"
+            }
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "Sergio Coderius",
+              "email": "sunrise4fun@gmail.com"
+            }
+          ],
+          "description": "Syntax highlighter widget for Yii2",
+          "keywords": [
+            "extension",
+            "yii2",
+            "yii2-highlight-js"
+          ],
+          "time": "2018-04-17T15:14:14+00:00"
+        },
+      {
             "name": "components/flag-icon-css",
             "version": "3.1.0",
             "source": {
@@ -312,6 +369,56 @@
             "time": "2018-03-01T15:28:45+00:00"
         },
         {
+          "name": "conquer/highlightjs",
+          "version": "1.0.0",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/borodulin/yii2-highlightjs.git",
+            "reference": "ce99826c1921f993d2a2e6c86012e07f8e1fc364"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/borodulin/yii2-highlightjs/zipball/ce99826c1921f993d2a2e6c86012e07f8e1fc364",
+            "reference": "ce99826c1921f993d2a2e6c86012e07f8e1fc364",
+            "shasum": ""
+          },
+          "require": {
+            "bower-asset/highlightjs": "*",
+            "php": ">=5.4.0",
+            "yiisoft/yii2": "*"
+          },
+          "type": "yii2-extension",
+          "extra": {
+            "branch-alias": {
+              "dev-master": "1.0.0.x-dev"
+            }
+          },
+          "autoload": {
+            "psr-4": {
+              "conquer\\highlightjs\\": ""
+            }
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "Andrey Borodulin",
+              "email": "borodulin@gmail.com"
+            }
+          ],
+          "description": "Yii2 Highlightjs widget",
+          "homepage": "https://github.com/borodulin/yii2-highlightjs",
+          "keywords": [
+            "extension",
+            "highlightjs",
+            "widget",
+            "yii2"
+          ],
+          "time": "2016-04-19T15:14:18+00:00"
+        },
+      {
             "name": "cyneek/yii2-upload-behavior",
             "version": "0.0.8",
             "source": {

@@ -20,7 +20,15 @@ use yii\helpers\Html;
 
     <?= $form->field($model, 'quantity')->textInput() ?>
 
-    <?= $form->field($model, 'price')->textInput() ?>
+    <?php
+    $addon = ['append' => [
+        'content' => kartik\helpers\Html::tag('code', $model->getFormatedPrice()),
+        'class' => 'btn btn-info getFormatedPrice',
+        'title' => 'цена',
+
+    ],
+    ];
+    echo $form->field($model, 'price', ['addon' => $addon])->textInput(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?php $id = 'collapse_' . mt_rand();

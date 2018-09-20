@@ -192,6 +192,12 @@ class Items extends \yii\db\ActiveRecord
         return number_format($this->sum / 100, 2, '.', ' ');
     }
 
+    public static function formatNum($value)
+    {
+
+        return number_format($value / 100, 2, '.', ' ');
+    }
+
     public function addImage($path)
     {
         if (!is_file($path)) return false;

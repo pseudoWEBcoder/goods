@@ -20,6 +20,9 @@ class UploadForm extends Model
     private $content;
     private $json;
     private $countitemsok = 0;
+    public $new_cols;/*новые колонки*/
+    public $skipt;/*пропущенные чеки*/
+    public $itemsnew;/*добавленные записи*/
 
     public function rules()
     {
@@ -50,7 +53,9 @@ class UploadForm extends Model
 
     private function insert()
     {
-        $this->findNeField();
+        list  ($items, $recipts) = $this->new_cols = $this->findNeField();
+        if (count($items) || count($recipts))
+            return false;
         $transaction = Yii::$app->db->beginTransaction();
         if ($this->truncateItems) {
             $statusItemsdeleteAll = Items::deleteAll();
@@ -67,6 +72,12 @@ class UploadForm extends Model
         foreach ($this->json as $idocument => $receiptitem) {
             $data = $receiptitem['document']['receipt'];
             $receipt = new Receipt($data);
+            $min = array_diff($data, ['items' => [],]);
+            $receipt_exists = \common\models\Receipt::find()->where($min)->exists();
+            if ($receipt_exists) {
+                $this->skipt[] = $min;
+                continue;
+            }
             $receipt_saved = $receipt->save(false);
             if ($receipt_saved)
                 $this->countreceiptsok++;
@@ -91,8 +102,10 @@ class UploadForm extends Model
                 $item->date_of_manufacture = $receipt->getDateTimeAsDateTime();
                 $item->date_set_by_bot = 1;
                 $saved = $item->save(false);
-                if ($saved)
-                    $this->countitemsok++;
+                if ($saved && $item->refresh()) {
+                    $this->countitemsok++;;
+                    $this->itemsnew[$item->item_id] = $item;
+                }
             }
         }
         $transaction->commit();

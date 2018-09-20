@@ -15,8 +15,8 @@ class ImportController extends \yii\web\Controller
         if (\Yii::$app->request->isPost) {
             $model->uploadedFile = UploadedFile::getInstance($model, 'uploadedFile');
             if ($model->upload()) {
-                return $model->exec();
-
+                $added = $model->exec();
+                return $this->render('result', ['model' => $model]);
             }
         }
 

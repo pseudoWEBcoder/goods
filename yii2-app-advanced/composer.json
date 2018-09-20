@@ -29,7 +29,9 @@
       "cyneek/yii2-upload-behavior": "^0.0.8",
         "newerton/yii2-fancybox": "dev-master",
       "kartik-v/yii2-editable": "*",
-      "johnitvn/yii2-ajaxcrud": "*"
+      "johnitvn/yii2-ajaxcrud": "*",
+      "conquer/highlightjs": "*",
+      "coderius/yii2-highlight-js": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
